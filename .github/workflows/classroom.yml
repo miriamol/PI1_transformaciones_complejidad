@@ -1,0 +1,60 @@
+name: Autograding
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
+
+    - name: Download JUnit 5
+      run: |
+        mkdir -p junit
+        mkdir -p junitstandalone
+        curl -L -o junit/junit-jupiter-api.jar https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar
+        curl -L -o junit/junit-jupiter-params.jar https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar 
+        curl -L -o junit/junit-platform-engine.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar
+        curl -L -o junit/junit-platform-launcher.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-launcher/1.9.3/junit-platform-launcher-1.9.3.jar
+        curl -L -o junit/junit-platform-reporting.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-reporting/1.9.3/junit-platform-reporting-1.9.3.jar
+        curl -L -o junit/junit-platform-console.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console/1.9.3/junit-platform-console-1.9.3.jar
+        curl -L -o junit/junit-platform-commons.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar
+        curl -L -o junit/junit-jupiter-engine.jar https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar
+        curl -L -o junit/apiguardian-api.jar https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar
+        curl -L -o junit/opentest4j.jar https://repo1.maven.org/maven2/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar
+        curl -L -o junitstandalone/junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
+             
+    - name: Checkout ADDA Repository
+      uses: actions/checkout@v4
+      with:
+        repository: 'migueltoro/adda_V3'
+        path: 'repoADDA'
+
+    - name: Compile dependencies
+      run: |
+        javac -encoding ISO-8859-1 -nowarn --module-path repoADDA/ParteComun/lib -d repoADDA/bin $(find repoADDA/ParteComun/src -name "*.java")
+        
+    - name: Compile project
+      run:  |
+        mkdir -p bin
+        javac -encoding ISO-8859-1 --module-path "repoADDA/bin:repoADDA/ParteComun/lib:junit" -d bin $(find src -name "*.java")
+        
+    - name: List compiled files for diagnostics
+      run: |
+        echo "Current repo compiled files:"
+        find bin -name "*.class"
+  
+    - name: Run tests
+      run: |
+        java -jar "junitstandalone/junit-platform-console-standalone.jar" --class-path "repoADDA/bin:bin:resources" \
+        --select-class=tests.junit.TestExercise1JUnit \
+        --select-class=tests.junit.TestExercise2JUnit \
+        --select-class=tests.junit.TestExercise3JUnit 

@@ -1,0 +1,6 @@
+45,ADDA
+87,PracticaIndividual1
+16,II-IS
+36,II-TI
+27,II-IC
+38,ISA
