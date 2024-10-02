@@ -1,6 +1,7 @@
 package exercises;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,18 +30,24 @@ public class Exercise2 {
 		    while (a > 3 && s.length() > 2) { // podría poner también while(!(a <= 3 || s.length <= 2))
 		        res.add(Integer.toString(a) + s); // Agregar toString(a) + s a la lista de resultados
 		        // Actualizar a a su mitad y s a la subcadena según el módulo de a con s.length
-		        a = a / 2;
+		        
 		        s = s.substring(a % s.length());
+		        a = a / 2;
 		    }
 		    
 		    // Cuando se cumpla el caso base, agregar toString(a) + s a la lista
 		    res.add(Integer.toString(a) + s);
+		    
+		 // Invertir la lista antes de retornarla
+		    Collections.reverse(res);
 		    return res;
 		}
 		
 		// RECURSIVA FINAL
 		public static List<String> ejercicio2RecursivoFinal(int a, String s) {
-		    return recFinal(a, s, new ArrayList<>()); // Llamada inicial con una lista vacía como acumulador
+			List<String> res =  recFinal(a, s, new ArrayList<>()); // Llamada inicial con una lista vacía como acumulador
+		    Collections.reverse(res); // Invertir la lista antes de retornarla
+		    return res;
 		}
 
 		// Método recursivo auxiliar (recursión final)
@@ -79,6 +86,8 @@ public class Exercise2 {
 		        // Añadir a la lista la concatenación de 'a' con la cadena 's'
 		        res.add(Integer.toString(t.a()) + t.s());
 		    });
+		    
+		    Collections.reverse(res); // Invertir la lista antes de retornarla
 		    return res;
 		}
 }

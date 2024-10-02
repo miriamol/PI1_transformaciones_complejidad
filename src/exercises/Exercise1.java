@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
+import us.lsi.common.Map2;
 import us.lsi.geometria.Cuadrante;
 import us.lsi.geometria.Punto2D;
 
@@ -34,15 +35,14 @@ public class Exercise1 {
 	// SOLUCIÓN ITERATIVA
 	public static Map<Cuadrante, String> ejercicio1Iterativo(List<Punto2D> ls) {
 	    Map<Cuadrante, String> ac = new HashMap<>();
-	    Integer i = 0;
-	    
+	    Integer i = 0;	    
 	    // iterar sobre la lista de puntos
 	    while (i < ls.size()) {
 	        Punto2D punto = ls.get(i); // Obtener el punto actual
 	        if (punto.x() % 5 != 0) {
 	            double nuevaX = punto.x() + 3; // a la coordenada X se le suma 3, así obtenemos nuevaX
 	            Punto2D puntoTransformado = Punto2D.of(nuevaX, punto.y());
-	            Cuadrante cuadrante = puntoTransformado.cuadrante(); // // Obtener el cuadrante del punto transformado
+	            Cuadrante cuadrante = puntoTransformado.cuadrante(); // Obtener el cuadrante del punto transformado
 	            
 	            String textoX = nuevaX % 2 == 0 ? nuevaX + "¡" : nuevaX + "!"; // // Generar el texto de la coordenada x con "¡" si es par, "!" si es impar
 	            
