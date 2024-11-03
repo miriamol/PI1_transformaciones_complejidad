@@ -10,7 +10,7 @@ public class Exercise2 {
 	// SE PIDE: Proporcione una solución recursiva no final, una iterativa usando while, una recursiva final, y una en notación funcional.
 	 
 		// SOLUCIÓN RECURSIVA NO FINAL
-		public static List<String> ejercicio2RecursivoNoFinal(int a, String s) {
+		public static List<String> ejercicio2RecursivoNoFinal(Integer a, String s) {
 			List<String> res = new ArrayList<>();
 			if(a<=3 || s.length() <= 2) { // caso base
 				res.add(Integer.toString(a) + s);
@@ -24,7 +24,7 @@ public class Exercise2 {
 		}
 		
 		// SOLUCIÓN ITERATIVA
-		public static List<String> ejercicio2Iterativo(int a, String s) {
+		public static List<String> ejercicio2Iterativo(Integer a, String s) {
 		    List<String> res = new ArrayList<>();
 		    // Mientras no se cumpla la condición base (a <= 3 o s.length <= 2)
 		    while (a > 3 && s.length() > 2) { // podría poner también while(!(a <= 3 || s.length <= 2))
@@ -44,14 +44,14 @@ public class Exercise2 {
 		}
 		
 		// RECURSIVA FINAL
-		public static List<String> ejercicio2RecursivoFinal(int a, String s) {
+		public static List<String> ejercicio2RecursivoFinal(Integer a, String s) {
 			List<String> res =  recFinal(a, s, new ArrayList<>()); // Llamada inicial con una lista vacía como acumulador
 		    Collections.reverse(res); // Invertir la lista antes de retornarla
 		    return res;
 		}
 
 		// Método recursivo auxiliar (recursión final)
-		private static List<String> recFinal(int a, String s, List<String> ac) {
+		private static List<String> recFinal(Integer a, String s, List<String> ac) {
 		    if (a <= 3 || s.length() <= 2) { // caso base
 		        ac.add(Integer.toString(a) + s);
 		        return ac;
@@ -62,8 +62,8 @@ public class Exercise2 {
 		
 		// NOTACIÓN FUNCIONAL
 		
-		private static record Tupla(int a, String s) { // UNA TUPLA PARA LOS VALORES DE A Y S
-		    public static Tupla of(int a, String s) {
+		private static record Tupla(Integer a, String s) { // UNA TUPLA PARA LOS VALORES DE A Y S
+		    public static Tupla of(Integer a, String s) {
 		        return new Tupla(a, s);
 		    }
 		    
@@ -77,7 +77,7 @@ public class Exercise2 {
 		}
 
 		
-		public static List<String> ejercicio2NotacionFuncional(int a, String s) {
+		public static List<String> ejercicio2NotacionFuncional(Integer a, String s) {
 		    List<String> res = new ArrayList<>();
 		    Tupla i = Tupla.of(a, s);
 		    

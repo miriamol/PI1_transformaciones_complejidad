@@ -25,7 +25,7 @@ public class Exercise3 {
 
 	public static Set<Integer> recMem(Integer a, Integer b, Integer c, Map<String, Set<Integer>> ac) {
 		Set<Integer> res = new HashSet<>();
-		String key = a + "-" + b + "-" + c;
+		String key = a + "-" + b + "-" + c; // ponemos guiones para que no haya confusión con los números
 
 		// Si ya existe el resultado para estos valores, lo devolvemos directamente
 		if (ac.containsKey(key)) {
@@ -51,9 +51,28 @@ public class Exercise3 {
 	}
 
 	public static Set<Integer> ejercicio3Iterativo(Integer a, Integer b, Integer c) {
-		return null;
-	}
+		Map<Tupla, Set<Integer>> m = new HashMap<>();
+		
+		for(int i = 0; i <= a; i++) {
+			for(int j = 0; j <= b; j++) {
+				for(int k = 0; k <= c; k++) {
+					Set<Integer> s = new HashSet<>();
+					if(i<=5 || j <=3 || k <=2) {
+						 s.add(2*i);
+						 s.add(j + 3);
+						 s.add(k);
+				} else {
+					s.addAll(m.get(Tupla.of(i-5,j/4,k-2)));
+					s.addAll(m.get(Tupla.of(i/3,j-3,k/2)));
+					}
+					m.put(Tupla.of(i, j, k), s);
+				}
+			}
+		}
+		return m.get(Tupla.of(a, b, c));
 
+	}
+	
 	public static record Tupla(Integer a, Integer b, Integer c) {
 		public static Tupla of(Integer a, Integer b, Integer c) {
 			return new Tupla(a, b, c);
