@@ -26,7 +26,8 @@ public class TestExercise1 {
 			System.out.println("2) Solucion Iterativa:\n" + Exercise1.ejercicio1Iterativo(ls));
 			System.out.println("3) Solucion Rec. Final:\n" + Exercise1.ejercicio1Recursivo(ls));
 			System.out.println(".............................................................................................................................");
-		
+			System.out.println("4) Solucion Iterativa:\n" + Exercise1.solucionIterativa(ls));
+			System.out.println("5) Solucion Rec. Final:\n" + Exercise1.solucionRecursivaFinal(ls));
 		});
 
 	}
